@@ -19,16 +19,6 @@ class App extends Component {
         face.sort((a,b) => 0.5 - Math.random());
     };
 
-    checkWin = () => {
-        if (this.state.score === 12) {
-            alert("Congrats! You Won the Game!");
-            // run win condition
-            this.setState({ score: 0, topScore: 0, newTopScore: 0 });
-            // randomize array order
-            face.sort((a,b) => 0.5 - Math.random());
-        }
-    }
-
     onClick = id => {
     // checks for match
     const face = this.state.face
@@ -49,13 +39,19 @@ class App extends Component {
         };
         // end game message
         alert("Sorry, you cliked the same face more than once. Try again.");
-    // check win condition
-    } else if (this.state.score < 12) {
-        clickedFace[0].click = true;
-        // increment counter
-        this.setState({ score: this.state.score + 1 });
-        // randomize array order
-        face.sort((a,b) => 0.5 - Math.random());
+        // check win condition
+        } else if (this.state.score < 12) {
+            clickedFace[0].click = true;
+            // increment counter
+            this.setState({ score: this.state.score + 1 }, function() {
+                if (this.state.score === 12) {
+                    alert("Congrats! You Won the Game!");
+                    // run win condition
+                    this.setState({ score: 0, topScore: 0, newTopScore: 0 });
+                }
+            });
+            // randomize array order
+            face.sort((a,b) => 0.5 - Math.random());
         }
     }
 
